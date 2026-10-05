@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const counterEl = document.getElementById('counter');
   if (!counterEl) return;
 
-  const target = 75356532;
+  const target = 92237156;
   const digitCount = String(target).length;
   const strips = buildOdometer(counterEl, digitCount);
 
@@ -103,4 +103,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tiles.forEach((tile) => observer.observe(tile));
   }
+});
+
+// Only the selected project video should play audio.
+document.querySelectorAll('.project-media video').forEach(video => {
+  video.addEventListener('play', () => {
+    document.querySelectorAll('video').forEach(other => { if (other !== video) other.pause(); });
+  });
+  video.addEventListener('error', () => {
+    if (video.parentElement.querySelector('.media-error')) return;
+    const message = document.createElement('p');
+    message.className = 'media-error';
+    message.textContent = 'Unable to play this video. ';
+    const link = document.createElement('a');
+    link.href = video.querySelector('source').src;
+    link.textContent = 'Download the video';
+    message.append(link);
+    video.parentElement.append(message);
+  }, true);
 });

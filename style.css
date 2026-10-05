@@ -28,10 +28,10 @@ nav {
 }
 
 .logo {
-  font-family: "owners", sans-serif;
-  font-weight: 700;
-  letter-spacing: normal;
-  font-size: 16px;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 18px;
   text-transform: uppercase;
 }
 
@@ -45,10 +45,10 @@ nav {
 .nav-links a {
   color: #eee;
   text-decoration: none;
-  font-family: "owners", sans-serif;
-  font-weight: 700;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
   font-size: 13px;
-  letter-spacing: normal;
+  letter-spacing: 0.04em;
 }
 
 .nav-links a.active {
@@ -68,14 +68,15 @@ nav {
   text-align: center;
 }
 
+/* Soft broadcast texture, with clean stationary digits between transitions. */
 .nav-count-number {
   position: relative;
   display: inline-flex;
   align-items: center;
-  font-family: "owners", sans-serif;
-  font-weight: 700;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
   font-size: 42px;
-  letter-spacing: normal;
+  letter-spacing: 0.01em;
   line-height: 1.4;
   color: #d8d8d8;
   font-variant-numeric: tabular-nums;
@@ -87,7 +88,7 @@ nav {
   display: inline-block;
   overflow: hidden;
   height: 1.4em;
-  width: 0.62em;
+  width: 0.80em;
   vertical-align: top;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
@@ -105,24 +106,16 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.55) 0px,
-      rgba(0,0,0,0.55) 1px,
-      transparent 1px,
-      transparent 3px
-    ),
-    linear-gradient(180deg, #c8c8c8 0%, #ffffff 14%, #b0b0b0 50%, #6a6a6a 86%, #454545 100%);
-  background-blend-mode: overlay;
+  background-image: repeating-linear-gradient(to bottom, #ededed 0px, #ededed 2px, #e3e3e3 2px, #e3e3e3 2.5px, #ededed 3px);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  text-shadow: -0.3px 0 rgba(255,65,65,.12), 0.3px 0 rgba(65,160,255,.14);
 }
 
 .digit-comma {
   display: inline-block;
-  width: 0.3em;
+  width: 0.30em;
   text-align: center;
   color: #b8b8b8;
 }
@@ -136,10 +129,10 @@ nav {
 }
 
 .nav-label {
-  font-family: "owners", sans-serif;
-  font-weight: 700;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
   font-size: 13px;
-  letter-spacing: normal;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #f2f2f2;
 }
@@ -151,12 +144,22 @@ nav {
   background: #000;
 }
 
+.hero-wrap::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 190px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.80) 60%, #0a0a0a 94%, #0a0a0a 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .hero-video {
   display: block;
   width: 100%;
-  max-height: 75vh;
-  aspect-ratio: 16 / 9;
-  object-fit: contain;
+  height: clamp(340px, 38vw, 560px);
+  object-fit: cover;
+  object-position: center;
   background: #000;
 }
 
@@ -198,9 +201,12 @@ nav {
 
 
 
-/* ---- Animated logo marquee ---- */
+/* ---- Animated logo marquee over the video feather ---- */
 .logo-marquee-label {
-  padding: 28px 0 10px;
+  position: absolute;
+  bottom: 87px;
+  left: 0;
+  right: 0;
   text-align: center;
   font-family: "owners-wide", sans-serif;
   font-weight: 300;
@@ -208,13 +214,19 @@ nav {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #999;
+  z-index: 2;
 }
 
 .logo-marquee-wrap {
-  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 85px;
   overflow: hidden;
   display: flex;
   align-items: center;
+  z-index: 2;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
 }
@@ -237,7 +249,7 @@ nav {
 
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(calc(-50% - 40px)); }
 }
 
 /* ---- Stats block (sits above the work grid) ---- */
@@ -253,10 +265,12 @@ nav {
 }
 
 .page-header h1 {
-  font-family: "owners", sans-serif;
-  font-weight: 800;
-  font-size: 30px;
-  letter-spacing: normal;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 56px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .page-header p {
@@ -287,8 +301,8 @@ nav {
   cursor: pointer;
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-tile.in-view {
@@ -316,10 +330,10 @@ nav {
   justify-content: center;
   text-align: center;
   padding: 20px;
-  font-family: "owners", sans-serif;
-  font-weight: 800;
+  font-family: "owners-wide", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
   font-size: 17px;
-  letter-spacing: normal;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #fff;
   z-index: 2;
@@ -334,10 +348,11 @@ nav {
 
 @media (max-width: 900px) {
   .work-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-video { max-height: none; }
-  .logo-marquee-label { padding-top: 22px; }
-  .logo-marquee-wrap { height: 80px; }
-  .logo-track img { height: 38px; }
+  .hero-video { height: clamp(250px, 68vw, 360px); }
+  .hero-wrap::after { height: 150px; }
+  .logo-marquee-label { bottom: 68px; font-size: 11px; }
+  .logo-marquee-wrap { height: 64px; }
+  .logo-track img { height: 36px; }
   .nav-links { display: none; }
   .nav-stats { display: none; }
 }
@@ -353,3 +368,155 @@ nav {
   color: #ccc;
   font-size: 15px;
 }
+
+/* Wide display lettering with a lighter weight and open tracking. */
+.logo, .page-header h1, .project-title { font-weight: 700; }
+.nav-links a { text-transform: uppercase; letter-spacing: 0.055em; }
+.logo-marquee-label { font-weight: 500; letter-spacing: 0.04em; }
+.page-header p { font-style: italic; }
+.logo-track > * { flex-shrink: 0; }
+/* Frame the original transparent artwork without changing the supplied asset. */
+.lil-baby-logo {
+  display: block;
+  position: relative;
+  height: 52px;
+  width: 79.473px;
+  overflow: hidden;
+}
+.logo-track .lil-baby-logo img {
+  position: absolute;
+  width: 117.776%;
+  height: 180%;
+  max-width: none;
+  left: -8.833%;
+  top: -40%;
+}
+@media (max-width: 1100px) and (min-width: 901px) {
+  nav { padding-inline: 24px; }
+  .logo { font-size: 15px; }
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 11px; }
+  .nav-count-number { font-size: 32px; }
+  .nav-label { font-size: 10px; }
+}
+@media (max-width: 900px) {
+  .lil-baby-logo { height: 36px; width: 55.02px; }
+  .page-header { padding-inline: 20px; }
+}
+
+/* Refresh entrance: quick lift, then a long, soft settle without overshoot.
+   Animate translate separately to preserve positioned elements' transforms. */
+@keyframes entrance-rise {
+  from { opacity: 0; translate: 0 var(--entrance-distance, 32px); }
+  to { opacity: 1; translate: 0 0; }
+}
+nav,
+.hero-video,
+.logo-marquee-label,
+.logo-marquee-wrap,
+.page-header h1,
+.page-header p,
+.about-content {
+  animation: entrance-rise 1.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--entrance-delay, 0s);
+}
+nav { --entrance-distance: 18px; --entrance-delay: 0.04s; }
+.hero-video { --entrance-distance: 0px; --entrance-delay: 0.14s; }
+.logo-marquee-label { --entrance-distance: 16px; --entrance-delay: 0.32s; }
+.logo-marquee-wrap { --entrance-distance: 22px; --entrance-delay: 0.4s; }
+.page-header h1 { --entrance-delay: 0.42s; }
+.page-header p { --entrance-distance: 22px; --entrance-delay: 0.5s; }
+.about-content { --entrance-delay: 0.58s; }
+@media (prefers-reduced-motion: reduce) {
+  nav, .hero-video, .logo-marquee-label, .logo-marquee-wrap,
+  .page-header h1, .page-header p, .about-content { animation: none; }
+  .project-tile { opacity: 1; transform: none; transition: none; }
+  .logo-track, .pulse-ring { animation: none; }
+  .digit-strip { transition: none !important; }
+}
+
+/* Keep a continuous opaque base beneath video and feather during entrance. */
+.hero-wrap { background: #0a0a0a; isolation: isolate; }
+.hero-video { background: #0a0a0a; }
+#work { position: relative; background: #0a0a0a; }
+
+/* About: paired full-frame portraits and a readable biography. */
+.about-content { max-width: 1040px; }
+.about-photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.about-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+.about-bio { max-width: 780px; margin: 0 auto; line-height: 1.85; }
+@media (max-width: 600px) {
+  .about-content { padding: 16px 20px 64px; font-size: 14px; }
+  .about-photos { gap: 10px; margin-bottom: 24px; }
+}
+
+/* Project collections */
+.project-tile { display: block; text-decoration: none; }
+.project-tile:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.project-tile:focus-visible .project-title { opacity: 1; }
+.project-tile:focus-visible img { opacity: .4; }
+.project-page { max-width: 1200px; padding: 32px 40px 80px; margin: auto; }
+.back-link, .project-footer a { color: #ccc; text-decoration: none; font-size: 13px; }
+.back-link:hover, .project-footer a:hover { color: white; text-decoration: underline; }
+.project-page .page-header { padding: 36px 0 40px; }
+.project-page h1 { line-height: 1.12; overflow-wrap: anywhere; }
+.project-gallery { display: grid; gap: 32px; }
+.project-media { margin: 0; background: #050505; border: 1px solid #242424; border-radius: 4px; overflow: hidden; }
+.project-media video { display: block; width: 100%; height: min(78vh, 780px); object-fit: contain; background: #000; }
+.project-media img { display: block; width: 100%; max-height: 90vh; object-fit: contain; }
+.project-footer { display: flex; justify-content: space-between; gap: 24px; margin-top: 48px; }
+@media (hover: none) { .project-title { opacity: 1; align-items: flex-end; padding: 36px 10px 14px; font-size: 13px; background: linear-gradient(transparent 55%, rgba(0,0,0,.8)); } }
+@media (max-width: 600px) { .work-grid { padding: 20px 16px 48px; } .project-page { padding: 24px 16px 48px; } .project-gallery { gap: 20px; } .project-footer { flex-direction: column; } .project-page h1 { font-size: 30px; } }
+
+/* Photo collections: a responsive gallery, separate from the video players. */
+.photo-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.photo-gallery .project-media { border: 0; background: none; }
+.photo-gallery a { display: block; }
+.photo-gallery img { width: 100%; height: auto; max-height: none; transition: opacity .2s ease; }
+.photo-gallery a:hover img { opacity: .85; }
+.photo-gallery a:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+@media(max-width: 700px) { .photo-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+
+/* Keep entrance motion from changing the browser's restored scroll position. */
+html { overflow-anchor: none; }
+/* Reserve consistent text and media geometry before fonts/images finish loading. */
+.page-header p { line-height: 1.5; }
+.logo, .nav-links { line-height: 1.3; }
+.nav-label, .logo-marquee-label { line-height: 1.4; }
+.project-tile { min-width: 0; }
+.project-tile > img { position: absolute; inset: 0; display: block; }
+
+.about-skills { max-width: 780px; margin: 30px auto 0; }
+.about-skills h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #999; margin-bottom: 14px; line-height: 1.5; }
+.about-skills ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+.about-skills li { border: 1px solid #333; border-radius: 4px; padding: 6px 12px; font-size: 12px; line-height: 1.5; color: #ddd; }
+
+/* Readable typography with a little more room between letters. */
+html, body { letter-spacing: .025em; font-weight: 400; }
+.page-header p, .about-content { font-weight: 400; letter-spacing: .025em; }
+.page-header p { font-style: normal; color: #aaa; }
+.about-content { font-size: 16px; }
+.about-bio { text-align: center; line-height: 1.9; max-width: 780px; }
+.about-skills { text-align: center; }
+.about-skills ul { justify-content: center; gap: 12px; }
+.about-skills li { font-size: 13px; font-weight: 400; letter-spacing: .035em; padding: 8px 14px; }
+.back-link, .project-footer a { letter-spacing: .025em; font-weight: 400; }
+@media(max-width:600px) { .about-content { font-size: 15px; } .about-skills ul { gap: 8px; } }
+
+/* Contact and shared business credit. */
+.site-footer { text-align: center; padding: 28px 20px; color: #888; font-size: 11px; font-weight: 400; line-height: 1.6; letter-spacing: .04em; }
+.contact-page { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.contact-content { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; }
+.contact-content a { color: #eee; text-decoration: none; font-size: clamp(16px, 2.4vw, 32px); font-weight: 400; letter-spacing: .035em; line-height: 1.5; overflow-wrap: anywhere; }
+.contact-content a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.contact-content a:focus-visible { outline: 2px solid white; outline-offset: 8px; }

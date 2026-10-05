@@ -1,0 +1,13 @@
+JACK APPLEGATE — PORTFOLIO
+
+Unzip the entire folder, then open index.html in your browser. Keep the files and projects folder together.
+
+Includes nine projects in numbered folder order, 17 project videos, and five Xavi photos. Project titles match the supplied folder names without their numeric prefixes. Videos play on click, and only one project video plays at a time. Photos are resized for web display; source files in your original ZIP are unchanged.
+
+This version uses the supplied local video files, not Vimeo embeds. To publish, upload the complete folder to your host. Videos account for most of its size and hosting bandwidth.
+
+The existing Contact navigation is still a placeholder from the supplied website.
+
+Version 12: All 17 project videos have individually selected preview frames from their own footage. Original PNGs remain the home-page project covers. Xavi photos use a responsive gallery grid; click a photo to open the full image.
+
+Version 13: Stabilized entrance layout, disabled browser scroll anchoring during page motion, and reserved text/image dimensions.
