@@ -218,3 +218,32 @@ document.addEventListener('DOMContentLoaded', () => {
   new ResizeObserver(matchOriginalSpeed).observe(group);
   matchOriginalSpeed();
 });
+
+// Start the decorative reel as soon as mobile browsers allow muted inline video.
+(() => {
+  const video = document.querySelector('.hero-video');
+  if (!video) return;
+  video.defaultMuted = true;
+  video.muted = true;
+  video.playsInline = true;
+  let pending = false;
+  const start = () => {
+    if (document.hidden || !video.paused || pending) return;
+    video.muted = true;
+    const attempt = video.play();
+    if (attempt) {
+      pending = true;
+      attempt.catch(() => { /* Autoplay can be blocked by device power/data settings. */ })
+        .finally(() => { pending = false; });
+    }
+  };
+  video.addEventListener('loadeddata', start);
+  video.addEventListener('canplay', start);
+  window.addEventListener('pageshow', start);
+  document.addEventListener('visibilitychange', start);
+  // A real interaction can release autoplay restrictions; never intercept scrolling or taps.
+  document.addEventListener('touchend', start, { passive: true });
+  document.addEventListener('pointerup', start, { passive: true });
+  document.addEventListener('keydown', start);
+  start();
+})();

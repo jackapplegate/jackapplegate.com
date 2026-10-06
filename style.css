@@ -559,7 +559,7 @@ nav { z-index: 10; }
 @media (max-width: 900px) {
  nav { min-height: 80px; padding: 24px 60px; justify-content: center; flex-wrap: wrap; }
  nav .logo { font-size: 9px; text-align: center; line-height: 1.4; }
- .home-page nav { padding: 20px 54px 22px; min-height: 150px; flex-direction: column; gap: 8px; }
+ .home-page nav { padding: 12px 48px 14px; min-height: 0; flex-direction: column; gap: 0; }
  .nav-stats { display: block; position: static; transform: none; text-align: center; }
  .nav-count-number { font-size: clamp(25px, 6.3vw, 36px); }
  .nav-live-row { gap: 6px; margin-top: 0; }
@@ -608,3 +608,19 @@ nav { z-index: 10; }
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
   mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
 }
+
+/* Mobile: compact header and a fixed-size, compositor-friendly status pulse. */
+@media (max-width: 900px) {
+ .home-page nav .logo { line-height: 1.1; }
+ .home-page .nav-stats { line-height: 1; }
+ .home-page .menu-toggle { top: 8px; }
+ .pulse-wrap { flex: 0 0 12px; }
+ .pulse-dot { box-shadow: 0 0 5px 1px rgba(255,46,46,.4); }
+ .pulse-ring { width: 6px; height: 6px; border-width: 1px; animation: mobile-status-pulse 4.6s ease-out infinite; }
+ .pulse-ring.delay { display: none; }
+}
+@keyframes mobile-status-pulse {
+  0% { transform: scale(1); opacity: .55; }
+  65%, 100% { transform: scale(2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .pulse-ring { animation: none; display: none; } }
