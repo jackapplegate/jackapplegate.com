@@ -1,13 +1,27 @@
-JACK APPLEGATE — PORTFOLIO
+JACK APPLEGATE — SITE UPDATE v18
 
-Unzip the entire folder, then open index.html in your browser. Keep the files and projects folder together.
+INSTALL
+1. Unzip single-showreel-site-v18-websites-last-flat.zip. All 77 files are at the ZIP root, with no subfolders.
+2. Copy all extracted files into the existing local jackapplegate.com GitHub repository. Replace matching files. Do not replace the repository folder itself.
+3. Keep your existing .git folder, CNAME/domain-verification files (if present), and GitHub Pages settings. This update does not change DNS, Pages settings, or repository configuration.
+4. Review the changes in GitHub Desktop, Commit, then Push.
 
-Includes nine projects in numbered folder order, 17 project videos, and five Xavi photos. Project titles match the supplied folder names without their numeric prefixes. Videos play on click, and only one project video plays at a time. Photos are resized for web display; source files in your original ZIP are unchanged.
+The old projects folder may remain in your repository; the new pages use the uniquely named files at the root. No old folder needs to be deleted for this version to work.
 
-This version uses the supplied local video files, not Vimeo embeds. To publish, upload the complete folder to your host. Videos account for most of its size and hosting bandwidth.
+CHANGES
+Home-only counter; Home link in the header; mobile hamburger navigation; smaller mobile client label positioned lower over the original showreel feather; smaller SoFlo mark in the continuous logo wheel; subtle grain, ambient light, empty-space cursor glow, and progressive scroll blur/fade; centered smaller personal-logo entrance sliding left to reveal one line of footer name/LLC text. Original v17 logo-wheel spacing and pixels-per-second are retained, including with SoFlo added. The mobile header name is smaller to emphasize the counter. Reduced-motion preferences are respected.
 
-The existing Contact navigation is still a placeholder from the supplied website.
+ORIGINAL ASSETS
+Both uploaded logos are unchanged. All photos and videos match the latest local GitHub repository byte-for-byte, including its smaller DraftKings/UFC video. No generated or retouched imagery is included. CSS controls display size only.
+The favicon directly uses personal-logo.png. Social share metadata directly uses the unchanged about-filming.png photo of Jack and Jayson Tatum. Messaging platforms may crop the photo or cache older previews; the source image is unchanged.
 
-Version 12: All 17 project videos have individually selected preview frames from their own footage. Original PNGs remain the home-page project covers. Xavi photos use a responsive gallery grid; click a photo to open the full image.
+PACKAGING
+Project media has unique project-prefixed filenames, with every page reference updated. No subfolders or build tools are required. This package is intended for copying into the local repo and Commit/Push, as requested.
 
-Version 13: Stabilized entrance layout, disabled browser scroll anchoring during page motion, and reserved text/image dimensions.
+XAVI PROJECT — TEMPORARILY ARCHIVED
+Xavi is hidden from Selected Work and skipped by the Next-project link. Its original project page and all Xavi assets remain in this package, unchanged. The page is still accessible to someone with its direct URL.
+To restore: remove only the opening <template id="archived-xavi-project"> and its closing </template> around the Xavi tile in index.html. In lil-baby-x-jaylen-brown.html, change the Next-project link back to xavi-simons.html with the label Next: Xavi Simons. No assets need to be re-uploaded.
+
+Banner seam fix: ambient lighting fades in gradually below the hero, preserving the original uninterrupted black transition. Layout, wheel speed and assets are unchanged. Xavi remains archived.
+
+About-page skills end with Websites.

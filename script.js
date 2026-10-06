@@ -5,6 +5,7 @@ function buildOdometer(el, digitCount) {
     const remaining = digitCount - i - 1;
     const slot = document.createElement('span');
     slot.className = 'digit-slot';
+    slot.setAttribute('aria-hidden', 'true');
     const strip = document.createElement('span');
     strip.className = 'digit-strip';
     for (let n = 0; n <= 9; n++) {
@@ -20,6 +21,7 @@ function buildOdometer(el, digitCount) {
     if (remaining > 0 && remaining % 3 === 0) {
       const comma = document.createElement('span');
       comma.className = 'digit-comma';
+      comma.setAttribute('aria-hidden', 'true');
       comma.textContent = ',';
       el.appendChild(comma);
     }
@@ -86,7 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
     scheduleTick(currentValue, delay, scheduleNextTick);
   }
 
-  requestAnimationFrame(ramp);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setOdometerValue(strips, target, digitCount, false);
+  } else { requestAnimationFrame(ramp); }
 
   const tiles = document.querySelectorAll('.project-tile');
   if (tiles.length) {
@@ -121,4 +125,96 @@ document.querySelectorAll('.project-media video').forEach(video => {
     message.append(link);
     video.parentElement.append(message);
   }, true);
+});
+
+// Shared navigation and restrained motion enhancements, independent of the counter.
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav');
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('.nav-links');
+  const mobile = matchMedia('(max-width: 900px)');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const setMenu = open => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    menu?.classList.toggle('is-open', open);
+  };
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu?.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
+  document.addEventListener('click', event => { if (!nav?.contains(event.target)) setMenu(false); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); }
+  });
+  nav?.addEventListener('focusout', event => { if (!nav.contains(event.relatedTarget)) setMenu(false); });
+  mobile.addEventListener('change', () => setMenu(false));
+
+  const brand = document.querySelector('.brand-lockup');
+  if (brand && !reduced.matches && 'IntersectionObserver' in window) {
+    brand.classList.add('brand-ready');
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { brand.classList.add('brand-visible'); observer.disconnect(); }
+    }, { threshold: .5 });
+    observer.observe(brand);
+  }
+
+  const surfaces = document.querySelectorAll('#work, .project-page, .about-content, .contact-content, .site-footer');
+  surfaces.forEach(surface => {
+    surface.classList.add('ambient-surface');
+    const light = document.createElement('span'); light.className = 'ambient-light'; light.setAttribute('aria-hidden','true'); surface.append(light);
+  });
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  let lit, pointerFrame;
+  const clearLight = () => { lit?.classList.remove('is-lit'); lit = null; };
+  document.addEventListener('pointermove', event => {
+    if (!finePointer.matches || reduced.matches) { clearLight(); return; }
+    const surface = event.target.closest('.ambient-surface');
+    // Limit activation to empty container space. Media and interactive/text elements never trigger light.
+    const empty = event.target.matches('.ambient-surface, .work-grid, .project-gallery, .photo-gallery, .page-header, .about-photos');
+    if (!surface || !empty) { clearLight(); return; }
+    if (lit !== surface) { clearLight(); lit = surface; }
+    cancelAnimationFrame(pointerFrame);
+    pointerFrame = requestAnimationFrame(() => {
+      if (lit !== surface) return;
+      const rect = surface.getBoundingClientRect();
+      surface.style.setProperty('--light-x', `${event.clientX - rect.left}px`);
+      surface.style.setProperty('--light-y', `${event.clientY - rect.top}px`);
+      surface.classList.add('is-lit');
+    });
+  }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', clearLight);
+  window.addEventListener('blur', clearLight);
+  window.addEventListener('scroll', clearLight, { passive: true });
+
+  const hero = document.querySelector('.hero-wrap');
+  if (hero) {
+    let scrollFrame;
+    const updateDepth = () => {
+      scrollFrame = null;
+      const rect = hero.getBoundingClientRect();
+      const progress = reduced.matches ? 0 : Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)));
+      hero.style.setProperty('--scroll-blur', `${(progress * 1.5).toFixed(2)}px`);
+      hero.style.setProperty('--scroll-opacity', (1 - progress * .15).toFixed(3));
+    };
+    const queueDepth = () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateDepth); };
+    window.addEventListener('scroll', queueDepth, { passive: true });
+    window.addEventListener('resize', queueDepth);
+    reduced.addEventListener('change', queueDepth);
+    updateDepth();
+  }
+});
+
+// Match v17's actual pixels/second: four original nine-logo cycles per 70s.
+// Adding SoFlo changes the loop length, not the established movement speed.
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.logo-track');
+  const group = track?.querySelector('.logo-group');
+  if (!group) return;
+  const matchOriginalSpeed = () => {
+    const gap = parseFloat(getComputedStyle(group).gap) || 80;
+    const originalMarks = [...group.children].filter(mark => !mark.classList.contains('soflo-logo'));
+    const originalCycle = originalMarks.reduce((total, mark) => total + mark.getBoundingClientRect().width + gap, 0);
+    if (originalCycle) track.style.animationDuration = `${70 * group.getBoundingClientRect().width / (4 * originalCycle)}s`;
+  };
+  new ResizeObserver(matchOriginalSpeed).observe(group);
+  matchOriginalSpeed();
 });

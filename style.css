@@ -520,3 +520,91 @@ html, body { letter-spacing: .025em; font-weight: 400; }
 .contact-content a { color: #eee; text-decoration: none; font-size: clamp(16px, 2.4vw, 32px); font-weight: 400; letter-spacing: .035em; line-height: 1.5; overflow-wrap: anywhere; }
 .contact-content a:hover { text-decoration: underline; text-underline-offset: .2em; }
 .contact-content a:focus-visible { outline: 2px solid white; outline-offset: 8px; }
+
+/* v18: restrained light, original artwork and responsive navigation. */
+.logo { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid #eee; outline-offset: 6px; }
+nav { z-index: 10; }
+.menu-toggle { display: none; }
+.dotted-bg { z-index: 30; pointer-events: none; opacity: .025; background-size: 180px 180px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.6' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); }
+.ambient-surface { position: relative; isolation: isolate; }
+.ambient-surface::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.018), transparent 65%); }
+.ambient-light { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .6s ease; background: radial-gradient(circle 220px at var(--light-x,50%) var(--light-y,50%), rgba(255,255,255,.055), rgba(255,255,255,.012) 45%, transparent 100%); }
+.ambient-surface.is-lit > .ambient-light { opacity: 1; }
+.logo-track { gap: 0; animation: marquee-scroll 70s linear infinite; }
+.logo-group { display: flex; align-items: center; gap: 80px; padding-right: 80px; flex-shrink: 0; }
+.logo-group > * { flex-shrink: 0; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* Frame transparent padding in CSS; the uploaded PNG stays byte-for-byte unchanged. */
+.soflo-logo { display: block; position: relative; width: 135px; height: 36px; overflow: hidden; }
+.logo-track .soflo-logo img { position: absolute; width: 157px; height: 157px; max-width: none; left: -11px; top: -62px; filter: none; }
+.hero-video, .logo-marquee-wrap { filter: blur(var(--scroll-blur,0px)); }
+.hero-wrap { --scroll-blur: 0px; }
+.hero-video, .logo-marquee-wrap { opacity: var(--scroll-opacity,1); }
+/* Keep scroll fading independent of the existing opacity entrance. */
+.hero-wrap { filter: opacity(var(--scroll-opacity,1)); }
+.site-footer { padding: 48px 20px; }
+.brand-lockup { position: relative; width: max-content; max-width: 100%; min-height: 34px; padding-left: 32px; margin: auto; display: flex; align-items: center; text-align: left; }
+.brand-mark-frame { position: absolute; width: 20px; height: 34px; left: 0; top: 0; }
+.personal-mark { position: absolute; width: 48px; height: 48px; max-width: none; object-fit: contain; left: -14px; top: -7px; }
+.brand-credit { margin-left: 0; line-height: 1.8; font-size: clamp(7px, 2.1vw, 11px); white-space: nowrap; }
+
+.brand-ready .brand-mark-frame { left: 50%; transform: translateX(-50%); opacity: 0; }
+.brand-ready .brand-credit { opacity: 0; clip-path: inset(0 100% 0 0); }
+.brand-ready.brand-visible .brand-mark-frame { animation: brand-swipe 2.3s cubic-bezier(.16,1,.3,1) both; }
+.brand-ready.brand-visible .brand-credit { animation: brand-reveal 1.7s .6s cubic-bezier(.16,1,.3,1) both; }
+@keyframes brand-swipe { 0% { left: 50%; transform: translateX(-50%) scale(.92); opacity: 0; } 25% { left: 50%; transform: translateX(-50%) scale(1); opacity: 1; } 100% { left: 0; transform: translateX(0) scale(1); opacity: 1; } }
+@keyframes brand-reveal { from { opacity: 0; clip-path: inset(0 100% 0 0); translate: -12px 0; } to { opacity: 1; clip-path: inset(0); translate: 0 0; } }
+@media (max-width: 1200px) and (min-width: 901px) { nav { padding-inline: 24px; } .logo { font-size: 14px; } .nav-links { gap: 15px; } .nav-links a { font-size: 11px; } .nav-count-number { font-size: 30px; } .nav-label { font-size: 10px; } }
+@media (max-width: 900px) {
+ nav { min-height: 80px; padding: 24px 60px; justify-content: center; flex-wrap: wrap; }
+ nav .logo { font-size: 9px; text-align: center; line-height: 1.4; }
+ .home-page nav { padding: 20px 54px 22px; min-height: 150px; flex-direction: column; gap: 8px; }
+ .nav-stats { display: block; position: static; transform: none; text-align: center; }
+ .nav-count-number { font-size: clamp(25px, 6.3vw, 36px); }
+ .nav-live-row { gap: 6px; margin-top: 0; }
+ .nav-label { font-size: clamp(8px, 2vw, 11px); white-space: nowrap; }
+ .pulse-wrap { width: 12px; height: 12px; }
+ .pulse-dot { width: 6px; height: 6px; }
+ .menu-toggle { position: absolute; top: 15px; right: 10px; width: 44px; height: 44px; display: flex; flex-direction: column; justify-content: center; gap: 5px; align-items: center; border: 0; background: transparent; color: #eee; cursor: pointer; }
+ .menu-toggle span { display: block; width: 21px; height: 1px; background: currentColor; transition: transform .35s ease, opacity .35s ease; }
+ .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+ .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+ .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+ .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; padding: 18px 24px; background: #080808; border-bottom: 1px solid #222; box-shadow: 0 14px 24px #0008; flex-direction: column; align-items: stretch; gap: 0; }
+ .nav-links.is-open { display: flex; }
+ .nav-links a { display: block; padding: 15px 8px; text-align: center; font-size: 12px; }
+ .nav-links a.active { border-bottom: 0; padding-bottom: 15px; text-decoration: underline; text-underline-offset: 6px; }
+ .hero-video { height: clamp(250px, 68vw, 360px); aspect-ratio: auto; object-fit: cover; }
+ .hero-wrap::after { display: block; height: 150px; }
+ .logo-marquee-label { position: absolute; bottom: 56px; margin-top: 0; padding: 0 16px; font-size: 8px; }
+ .logo-marquee-wrap { position: absolute; bottom: 0; height: 64px; margin-top: 0; }
+ .logo-group { gap: 80px; padding-right: 80px; }
+ .soflo-logo { width: 108px; height: 28px; }
+ .logo-track .soflo-logo img { width: 126px; height: 126px; left: -9px; top: -50px; }
+ .page-header { padding-top: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .hero-wrap { filter: none; }
+ .hero-video, .logo-marquee-wrap { filter: none; opacity: 1; }
+ .ambient-light { display: none; }
+ .brand-ready .brand-mark-frame, .brand-ready.brand-visible .brand-mark-frame { animation: none; left: 0; transform: none; opacity: 1; }
+ .brand-ready .brand-credit, .brand-ready.brand-visible .brand-credit { animation: none; opacity: 1; clip-path: none; translate: none; }
+ .logo-track { animation: none; }
+ .logo-marquee-wrap { overflow-x: auto; }
+ .logo-group[aria-hidden="true"] { display: none; }
+}
+/* SoFlo: match the optical weight of the neighboring client marks. */
+.soflo-logo { width: 88px; height: 24px; }
+.logo-track .soflo-logo img { width: 102px; height: 102px; left: -7px; top: -40px; }
+@media (max-width: 900px) {
+ .soflo-logo { width: 70px; height: 19px; }
+ .logo-track .soflo-logo img { width: 81px; height: 81px; left: -5.7px; top: -32px; }
+}
+
+/* Let the reel feather meet the exact same black before ambient light builds. */
+#work.ambient-surface::before,
+#work.ambient-surface > .ambient-light {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
+}
