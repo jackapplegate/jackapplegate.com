@@ -1,4 +1,4 @@
-LATEST COMPLETE SITE — v23
+LATEST COMPLETE SITE — v24
 
 Unzip single-showreel-site-v20-complete-flat.zip. Copy ALL files into your existing local GitHub repository beside index.html, replacing matches. Keep the .git folder. Commit and Push, then wait for a successful Pages deployment.
 
@@ -10,6 +10,8 @@ Selected Work contains eight projects. Grid content remains visible even if entr
 
 Device autoplay restrictions may still require a tap. Existing old project folders can remain; this version references root-level assets.
 
-Subtle body background: original supplied JPG, displayed at 5.5% opacity behind Work, About and Contact content only. All earlier updates and CNAME retained.
+Subtle body background: original supplied JPG, displayed at 3.5% opacity behind Work, About and Contact content only. All earlier updates and CNAME retained.
 
 Counter: remembers its highest displayed total in browser storage. Returning Home or refreshing resumes that value without the opening count-up. Browser Back restores the saved value too. The first entry in each new tab session animates up to the saved total. Returning Home and refreshing within that tab do not replay it. Existing simulated increments remain; this is not live analytics. Clearing or blocking browser storage resets persistence.
+
+Mobile work tiles now use a short opacity-only reveal, triggered before entering view, without vertical movement or stagger. The lighter body grid fades in with the wheel entrance and blends gradually over 240px below the reel.

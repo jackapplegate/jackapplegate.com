@@ -634,9 +634,15 @@ nav { z-index: 10; }
   pointer-events: none;
   background: url("subtle-grid.jpg") center top / 1800px auto repeat;
   mix-blend-mode: screen;
-  opacity: .055;
+  opacity: .035;
 }
 #work::after {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.12) 60px, #000 240px);
+  mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.12) 60px, #000 240px);
+  animation: body-grid-enter 1.9s .4s cubic-bezier(.16,1,.3,1) both;
 }
+@keyframes body-grid-enter { from { opacity: 0; } to { opacity: .035; } }
+@media (max-width: 900px) {
+ .project-tile, .project-tile.in-view { transform: none; transition: none; }
+}
+@media (prefers-reduced-motion: reduce) { #work::after { animation: none; } }
