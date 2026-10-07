@@ -123,12 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const tiles = document.querySelectorAll('.project-tile');
   if (tiles.length) {
     const mobileReveal = matchMedia('(max-width: 900px)').matches;
+    const reduceReveal = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (mobileReveal && !reduceReveal) {
+      tiles.forEach(tile => tile.classList.add('mobile-reveal'));
+      // Commit the initial state once, before observers begin revealing cards.
+      void document.querySelector('.work-grid').offsetHeight;
+    }
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const index = Array.from(tiles).indexOf(entry.target);
           entry.target.style.transitionDelay = mobileReveal ? '0ms' : `${(index % 4) * 90}ms`;
-          if (!matchMedia('(prefers-reduced-motion: reduce)').matches && entry.target.animate) {
+          if (!mobileReveal && !reduceReveal && entry.target.animate) {
             // Mobile fades in before reaching the viewport; no moving geometry or row stagger.
             const frames = mobileReveal
               ? [{ opacity: .35 }, { opacity: 1 }]
@@ -144,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, mobileReveal
-      ? { threshold: 0, rootMargin: '0px 0px 160px 0px' }
+      ? { threshold: 0, rootMargin: '0px 0px 48px 0px' }
       : { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
     tiles.forEach((tile) => observer.observe(tile));

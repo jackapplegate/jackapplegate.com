@@ -1,4 +1,4 @@
-LATEST COMPLETE SITE — v24
+LATEST COMPLETE SITE — v25
 
 Unzip single-showreel-site-v20-complete-flat.zip. Copy ALL files into your existing local GitHub repository beside index.html, replacing matches. Keep the .git folder. Commit and Push, then wait for a successful Pages deployment.
 
@@ -15,3 +15,5 @@ Subtle body background: original supplied JPG, displayed at 3.5% opacity behind 
 Counter: remembers its highest displayed total in browser storage. Returning Home or refreshing resumes that value without the opening count-up. Browser Back restores the saved value too. The first entry in each new tab session animates up to the saved total. Returning Home and refreshing within that tab do not replay it. Existing simulated increments remain; this is not live analytics. Clearing or blocking browser storage resets persistence.
 
 Mobile work tiles now use a short opacity-only reveal, triggered before entering view, without vertical movement or stagger. The lighter body grid fades in with the wheel entrance and blends gradually over 240px below the reel.
+
+Mobile reveal revision: one CSS opacity transition per card, with the initial state set before observing visibility; eager project thumbnail loading; touch devices do not apply desktop hover zoom. Desktop reveal preserved.
