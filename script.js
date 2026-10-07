@@ -45,52 +45,80 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!counterEl) return;
 
   const target = 92237156;
-  const digitCount = String(target).length;
-  const strips = buildOdometer(counterEl, digitCount);
-
-  setOdometerValue(strips, 0, digitCount, false);
-
-  const rampDuration = 1300;
-  const startTime = performance.now();
-
-  function easeOutExpo(t) {
-    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-  }
-
-  function ramp(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / rampDuration, 1);
-    const eased = easeOutExpo(progress);
-    const value = Math.floor(eased * target);
-    setOdometerValue(strips, value, digitCount, false);
-
-    if (progress < 1) {
-      requestAnimationFrame(ramp);
-    } else {
-      setOdometerValue(strips, target, digitCount, false);
-      scheduleTick(target, 1000, (v1) => {
-        scheduleTick(v1, 2000, scheduleNextTick);
-      });
+  const storageKey = 'jack-applegate-view-count';
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const readSaved = () => {
+    let value = 0;
+    for (const type of ['localStorage', 'sessionStorage']) {
+      try {
+        const saved = Number(window[type].getItem(storageKey));
+        if (Number.isSafeInteger(saved) && saved >= target) value = Math.max(value, saved);
+      } catch (_) { /* Storage may be unavailable in restricted browsing. */ }
     }
-  }
-
-  function scheduleTick(currentValue, delay, nextDelayFn) {
-    setTimeout(() => {
-      const increment = 1 + Math.floor(Math.random() * 4);
-      const newValue = currentValue + increment;
-      setOdometerValue(strips, newValue, digitCount, true);
-      nextDelayFn(newValue);
+    return value;
+  };
+  // The total persists across visits; the entrance is once per tab session.
+  const entranceKey = 'jack-applegate-counter-entered';
+  let hasEntered = false;
+  try {
+    hasEntered = sessionStorage.getItem(entranceKey) === 'yes';
+    sessionStorage.setItem(entranceKey, 'yes');
+  } catch (_) { /* Keep the initial animation when storage is unavailable. */ }
+  const saved = readSaved();
+  let current = Math.max(target, saved);
+  let digitCount = String(current).length;
+  let strips = buildOdometer(counterEl, digitCount);
+  let timer, frame;
+  const save = () => {
+    for (const type of ['localStorage', 'sessionStorage']) {
+      try { window[type].setItem(storageKey, String(current)); } catch (_) {}
+    }
+  };
+  const display = (animate = false) => {
+    if (String(current).length !== digitCount) {
+      digitCount = String(current).length;
+      strips = buildOdometer(counterEl, digitCount);
+    }
+    setOdometerValue(strips, current, digitCount, animate && !reducedMotion.matches);
+    counterEl.setAttribute('aria-label', `${current.toLocaleString('en-US')} client-generated views`);
+  };
+  const tick = (delay = 9000 + Math.random() * 6000) => {
+    clearTimeout(timer);
+    if (reducedMotion.matches) return;
+    timer = setTimeout(() => {
+      current = Math.max(current, readSaved()) + 1 + Math.floor(Math.random() * 4);
+      save(); display(true); tick();
     }, delay);
+  };
+  // Reserve the final starting value immediately, including early departures.
+  save();
+  if (hasEntered || reducedMotion.matches) {
+    display(); tick();
+  } else {
+    const start = performance.now();
+    const ramp = now => {
+      const progress = Math.min((now - start) / 1300, 1);
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setOdometerValue(strips, Math.floor(eased * current), digitCount, false);
+      if (progress < 1) frame = requestAnimationFrame(ramp);
+      else { display(); tick(1000); }
+    };
+    frame = requestAnimationFrame(ramp);
   }
-
-  function scheduleNextTick(currentValue) {
-    const delay = 9000 + Math.random() * 6000;
-    scheduleTick(currentValue, delay, scheduleNextTick);
-  }
-
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setOdometerValue(strips, target, digitCount, false);
-  } else { requestAnimationFrame(ramp); }
+  window.addEventListener('pagehide', () => {
+    cancelAnimationFrame(frame); clearTimeout(timer);
+    current = Math.max(current, readSaved()); save();
+  });
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted) return;
+    cancelAnimationFrame(frame);
+    current = Math.max(current, readSaved()); save(); display(); tick();
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== storageKey) return;
+    cancelAnimationFrame(frame);
+    current = Math.max(current, readSaved()); display();
+  });
 
   const tiles = document.querySelectorAll('.project-tile');
   if (tiles.length) {
@@ -99,6 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (entry.isIntersecting) {
           const index = Array.from(tiles).indexOf(entry.target);
           entry.target.style.transitionDelay = `${(index % 4) * 90}ms`;
+          if (!matchMedia('(prefers-reduced-motion: reduce)').matches && entry.target.animate) {
+            entry.target.animate([
+              { opacity: 0, transform: 'translateY(50px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ], { duration: 1900, delay: (index % 4) * 90, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'backwards' });
+          }
           entry.target.classList.add('in-view');
           observer.unobserve(entry.target);
         }

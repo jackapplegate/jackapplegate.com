@@ -299,8 +299,8 @@ nav {
   background: linear-gradient(135deg, #2a2a2a, #161616);
   border: 1px solid #2a2a2a;
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(50px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -624,3 +624,19 @@ nav { z-index: 10; }
   65%, 100% { transform: scale(2); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .pulse-ring { animation: none; display: none; } }
+
+/* Subtle grid lives behind content in the three requested body sections. */
+#work::after, .about-content::after, .contact-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("subtle-grid.jpg") center top / 1800px auto repeat;
+  mix-blend-mode: screen;
+  opacity: .055;
+}
+#work::after {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 120px);
+}

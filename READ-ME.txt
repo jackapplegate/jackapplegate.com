@@ -1,29 +1,15 @@
-JACK APPLEGATE — SITE UPDATE v18
+LATEST COMPLETE SITE — v23
 
-INSTALL
-1. Unzip single-showreel-site-v18-mobile-fixed-flat.zip. All 77 files are at the ZIP root, with no subfolders.
-2. Copy all extracted files into the existing local jackapplegate.com GitHub repository. Replace matching files. Do not replace the repository folder itself.
-3. Keep your existing .git folder, CNAME/domain-verification files (if present), and GitHub Pages settings. This update does not change DNS, Pages settings, or repository configuration.
-4. Review the changes in GitHub Desktop, Commit, then Push.
+Unzip single-showreel-site-v20-complete-flat.zip. Copy ALL files into your existing local GitHub repository beside index.html, replacing matches. Keep the .git folder. Commit and Push, then wait for a successful Pages deployment.
 
-The old projects folder may remain in your repository; the new pages use the uniquely named files at the root. No old folder needs to be deleted for this version to work.
+All files are at the ZIP root; no subfolders. CNAME is included and must remain: jackapplegate.com.
 
-CHANGES
-Home-only counter; Home link in the header; mobile hamburger navigation; smaller mobile client label positioned lower over the original showreel feather; smaller SoFlo mark in the continuous logo wheel; subtle grain, ambient light, empty-space cursor glow, and progressive scroll blur/fade; centered smaller personal-logo entrance sliding left to reveal one line of footer name/LLC text. Original v17 logo-wheel spacing and pixels-per-second are retained, including with SoFlo added. The mobile header name is smaller to emphasize the counter. Reduced-motion preferences are respected.
+Includes every approved update: compact mobile header, small status pulse, muted inline autoplay startup, original logo-wheel speed and feather, smaller SoFlo, seamless banner transition, subtle effects, centered small footer logo with single-line credit, unchanged Tatum share photo and original logos, Websites last in the About skills.
 
-ORIGINAL ASSETS
-Both uploaded logos are unchanged. All photos and videos match the latest local GitHub repository byte-for-byte, including its smaller DraftKings/UFC video. No generated or retouched imagery is included. CSS controls display size only.
-The favicon directly uses personal-logo.png. Social share metadata directly uses the unchanged about-filming.png photo of Jack and Jayson Tatum. Messaging platforms may crop the photo or cache older previews; the source image is unchanged.
+Selected Work contains eight projects. Grid content remains visible even if entrance JavaScript fails to load. Xavi is archived in an inert template, with its page and all assets retained. To restore, remove only the template wrapper with id archived-xavi-project in index.html and change the Next link in lil-baby-x-jaylen-brown.html back to xavi-simons.html.
 
-PACKAGING
-Project media has unique project-prefixed filenames, with every page reference updated. No subfolders or build tools are required. This package is intended for copying into the local repo and Commit/Push, as requested.
+Device autoplay restrictions may still require a tap. Existing old project folders can remain; this version references root-level assets.
 
-XAVI PROJECT — TEMPORARILY ARCHIVED
-Xavi is hidden from Selected Work and skipped by the Next-project link. Its original project page and all Xavi assets remain in this package, unchanged. The page is still accessible to someone with its direct URL.
-To restore: remove only the opening <template id="archived-xavi-project"> and its closing </template> around the Xavi tile in index.html. In lil-baby-x-jaylen-brown.html, change the Next-project link back to xavi-simons.html with the label Next: Xavi Simons. No assets need to be re-uploaded.
+Subtle body background: original supplied JPG, displayed at 5.5% opacity behind Work, About and Contact content only. All earlier updates and CNAME retained.
 
-Banner seam fix: ambient lighting fades in gradually below the hero, preserving the original uninterrupted black transition. Layout, wheel speed and assets are unchanged. Xavi remains archived.
-
-About-page skills end with Websites.
-
-Mobile update: compact header, tighter name/counter spacing, fixed-size small pulse, eager muted inline showreel playback with retries after loading or user interaction. Device autoplay restrictions can still require a tap.
+Counter: remembers its highest displayed total in browser storage. Returning Home or refreshing resumes that value without the opening count-up. Browser Back restores the saved value too. The first entry in each new tab session animates up to the saved total. Returning Home and refreshing within that tab do not replay it. Existing simulated increments remain; this is not live analytics. Clearing or blocking browser storage resets persistence.
