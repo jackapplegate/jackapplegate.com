@@ -124,11 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tiles.length) {
     const mobileReveal = matchMedia('(max-width: 900px)').matches;
     const reduceReveal = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (mobileReveal && !reduceReveal) {
-      tiles.forEach(tile => tile.classList.add('mobile-reveal'));
-      // Commit the initial state once, before observers begin revealing cards.
-      void document.querySelector('.work-grid').offsetHeight;
-    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -144,6 +140,15 @@ document.addEventListener('DOMContentLoaded', () => {
               delay: mobileReveal ? 0 : (index % 4) * 90,
               easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'backwards'
             });
+          }
+          if (mobileReveal && !reduceReveal) {
+            const image = entry.target.querySelector('img');
+            const reveal = () => {
+              const rect = entry.target.getBoundingClientRect();
+              if (rect.bottom > 0 && rect.top < innerHeight + 48) entry.target.classList.add('image-reveal');
+            };
+            if (image.complete && image.naturalWidth) reveal();
+            else image.addEventListener('load', reveal, { once: true });
           }
           entry.target.classList.add('in-view');
           observer.unobserve(entry.target);
@@ -276,7 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
   video.playsInline = true;
   let pending = false;
   const start = () => {
-    if (document.hidden || !video.paused || pending) return;
+    const rect = video.getBoundingClientRect();
+    if (document.hidden || !video.paused || pending || rect.bottom <= 0 || rect.top >= innerHeight) return;
     video.muted = true;
     const attempt = video.play();
     if (attempt) {
@@ -290,8 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('pageshow', start);
   document.addEventListener('visibilitychange', start);
   // A real interaction can release autoplay restrictions; never intercept scrolling or taps.
-  document.addEventListener('touchend', start, { passive: true });
-  document.addEventListener('pointerup', start, { passive: true });
-  document.addEventListener('keydown', start);
+  video.addEventListener('click', start);
   start();
 })();

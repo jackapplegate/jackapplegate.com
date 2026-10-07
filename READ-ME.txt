@@ -1,4 +1,4 @@
-LATEST COMPLETE SITE — v25
+LATEST COMPLETE SITE — v26
 
 Unzip single-showreel-site-v20-complete-flat.zip. Copy ALL files into your existing local GitHub repository beside index.html, replacing matches. Keep the .git folder. Commit and Push, then wait for a successful Pages deployment.
 
@@ -17,3 +17,5 @@ Counter: remembers its highest displayed total in browser storage. Returning Hom
 Mobile work tiles now use a short opacity-only reveal, triggered before entering view, without vertical movement or stagger. The lighter body grid fades in with the wheel entrance and blends gradually over 240px below the reel.
 
 Mobile reveal revision: one CSS opacity transition per card, with the initial state set before observing visibility; eager project thumbnail loading; touch devices do not apply desktop hover zoom. Desktop reveal preserved.
+
+Mobile correction: cards remain fully visible; loaded images animate gently inside fixed frames. Autoplay retries no longer run on page-wide touch/scroll gestures and will not start an offscreen reel.
