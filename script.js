@@ -122,41 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const tiles = document.querySelectorAll('.project-tile');
   if (tiles.length) {
-    const mobileReveal = matchMedia('(max-width: 900px)').matches;
-    const reduceReveal = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const index = Array.from(tiles).indexOf(entry.target);
-          entry.target.style.transitionDelay = mobileReveal ? '0ms' : `${(index % 4) * 90}ms`;
-          if (!mobileReveal && !reduceReveal && entry.target.animate) {
-            // Mobile fades in before reaching the viewport; no moving geometry or row stagger.
-            const frames = mobileReveal
-              ? [{ opacity: .35 }, { opacity: 1 }]
-              : [{ opacity: 0, transform: 'translateY(50px)' }, { opacity: 1, transform: 'translateY(0)' }];
-            entry.target.animate(frames, {
-              duration: mobileReveal ? 700 : 1900,
-              delay: mobileReveal ? 0 : (index % 4) * 90,
-              easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'backwards'
-            });
-          }
-          if (mobileReveal && !reduceReveal) {
-            const image = entry.target.querySelector('img');
-            const reveal = () => {
-              const rect = entry.target.getBoundingClientRect();
-              if (rect.bottom > 0 && rect.top < innerHeight + 48) entry.target.classList.add('image-reveal');
-            };
-            if (image.complete && image.naturalWidth) reveal();
-            else image.addEventListener('load', reveal, { once: true });
-          }
+          entry.target.style.transitionDelay = `${(index % 4) * 90}ms`;
           entry.target.classList.add('in-view');
           observer.unobserve(entry.target);
         }
       });
-    }, mobileReveal
-      ? { threshold: 0, rootMargin: '0px 0px 48px 0px' }
-      : { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
     tiles.forEach((tile) => observer.observe(tile));
   }

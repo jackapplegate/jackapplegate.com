@@ -1,21 +1,9 @@
-LATEST COMPLETE SITE — v26
+LATEST COMPLETE SITE — v32
 
-Unzip single-showreel-site-v20-complete-flat.zip. Copy ALL files into your existing local GitHub repository beside index.html, replacing matches. Keep the .git folder. Commit and Push, then wait for a successful Pages deployment.
+Extract single-showreel-site-v32-about-contact-grid-flat.zip into your existing local GitHub repository, replacing matching files. Keep .git, then Commit and Push. CNAME is included. No subfolders.
 
-All files are at the ZIP root; no subfolders. CNAME is included and must remain: jackapplegate.com.
+Original v17 work-card animation remains exactly as restored in v31, on desktop and mobile. Home HTML and JavaScript are unchanged from v31.
 
-Includes every approved update: compact mobile header, small status pulse, muted inline autoplay startup, original logo-wheel speed and feather, smaller SoFlo, seamless banner transition, subtle effects, centered small footer logo with single-line credit, unchanged Tatum share photo and original logos, Websites last in the About skills.
+Grid texture is enabled only behind About and Contact content at 3.5% opacity, fading at the edges. No grid overlay is added to Home, the showreel, work cards or project pages.
 
-Selected Work contains eight projects. Grid content remains visible even if entrance JavaScript fails to load. Xavi is archived in an inert template, with its page and all assets retained. To restore, remove only the template wrapper with id archived-xavi-project in index.html and change the Next link in lil-baby-x-jaylen-brown.html back to xavi-simons.html.
-
-Device autoplay restrictions may still require a tap. Existing old project folders can remain; this version references root-level assets.
-
-Subtle body background: original supplied JPG, displayed at 3.5% opacity behind Work, About and Contact content only. All earlier updates and CNAME retained.
-
-Counter: remembers its highest displayed total in browser storage. Returning Home or refreshing resumes that value without the opening count-up. Browser Back restores the saved value too. The first entry in each new tab session animates up to the saved total. Returning Home and refreshing within that tab do not replay it. Existing simulated increments remain; this is not live analytics. Clearing or blocking browser storage resets persistence.
-
-Mobile work tiles now use a short opacity-only reveal, triggered before entering view, without vertical movement or stagger. The lighter body grid fades in with the wheel entrance and blends gradually over 240px below the reel.
-
-Mobile reveal revision: one CSS opacity transition per card, with the initial state set before observing visibility; eager project thumbnail loading; touch devices do not apply desktop hover zoom. Desktop reveal preserved.
-
-Mobile correction: cards remain fully visible; loaded images animate gently inside fixed frames. Autoplay retries no longer run on page-wide touch/scroll gestures and will not start an offscreen reel.
+All prior approved changes and original assets remain, including the compact mobile header, counter persistence/first-entry animation, SoFlo, original wheel motion, Websites last in skills, archived Xavi files, and domain configuration.
