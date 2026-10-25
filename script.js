@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const counterEl = document.getElementById('counter');
   if (!counterEl) return;
 
-  const target = 92237156;
+  const target = 96237156;
   const storageKey = 'jack-applegate-view-count';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const readSaved = () => {
