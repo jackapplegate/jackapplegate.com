@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jack Applegate</title>
 <link rel="stylesheet" href="https://use.typekit.net/bgt3xrp.css">
-<link rel="stylesheet" href="style.css?v=33">
+<script>
+// Establish the reveal state before the first paint, with a failure fallback.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    'IntersectionObserver' in window) {
+  document.documentElement.classList.add('grid-reveal');
+  window.setTimeout(function () {
+    if (!document.documentElement.classList.contains('grid-reveal-ready')) {
+      document.documentElement.classList.remove('grid-reveal');
+    }
+  }, 6000);
+}
+</script>
+<link rel="stylesheet" href="style.css?v=34">
 <link rel="icon" type="image/png" href="personal-logo.png">
 <meta name="description" content="Jack Applegate — creative, video, photography and selected work.">
 <meta property="og:type" content="website">
@@ -88,19 +100,19 @@
   </div>
 
   <div class="work-grid">
-<a class="project-tile" href="celtics-reel.html" aria-label="View Celtics Reel"><span class="project-title">Celtics Reel</span><img src="celtics-reel--thumbnail.png" alt="Celtics Reel" loading="eager" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="geno-smith.html" aria-label="View Geno Smith"><span class="project-title">Geno Smith</span><img src="geno-smith--thumbnail.png" alt="Geno Smith" loading="eager" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="lil-baby-x-jaylen-brown.html" aria-label="View Lil Baby X Jaylen Brown"><span class="project-title">Lil Baby X Jaylen Brown</span><img src="lil-baby-x-jaylen-brown--thumbnail.png" alt="Lil Baby X Jaylen Brown" loading="eager" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="celtics-reel.html" aria-label="View Celtics Reel"><span class="project-title">Celtics Reel</span><img src="celtics-reel--thumbnail-800.jpg" alt="Celtics Reel" loading="eager" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="geno-smith.html" aria-label="View Geno Smith"><span class="project-title">Geno Smith</span><img src="geno-smith--thumbnail-800.jpg" alt="Geno Smith" loading="eager" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="lil-baby-x-jaylen-brown.html" aria-label="View Lil Baby X Jaylen Brown"><span class="project-title">Lil Baby X Jaylen Brown</span><img src="lil-baby-x-jaylen-brown--thumbnail-800.jpg" alt="Lil Baby X Jaylen Brown" loading="eager" decoding="async" width="1200" height="1500"></a>
 <template id="archived-xavi-project"><a class="project-tile" href="xavi-simons.html" aria-label="View Xavi Simons"><span class="project-title">Xavi Simons</span><img src="xavi-simons--thumbnail.png" alt="Xavi Simons" loading="eager" decoding="async" width="1200" height="1500"></a></template>
-<a class="project-tile" href="neemias-queta.html" aria-label="View Neemias Queta"><span class="project-title">Neemias Queta</span><img src="neemias-queta--thumbnail.png" alt="Neemias Queta" loading="eager" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="marcus-jones.html" aria-label="View Marcus Jones"><span class="project-title">Marcus Jones</span><img src="marcus-jones--thumbnail.png" alt="Marcus Jones" loading="lazy" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="miami-heat-vs-celtics.html" aria-label="View Miami Heat vs. Celtics"><span class="project-title">Miami Heat vs. Celtics</span><img src="miami-heat-vs-celtics--thumbnail.png" alt="Miami Heat vs. Celtics" loading="lazy" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="draftkings.html" aria-label="View DraftKings"><span class="project-title">DraftKings</span><img src="draftkings--thumbnail.png" alt="DraftKings" loading="lazy" decoding="async" width="1200" height="1500"></a>
-<a class="project-tile" href="hockey.html" aria-label="View Hockey"><span class="project-title">Hockey</span><img src="hockey--thumbnail.png" alt="Hockey" loading="lazy" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="neemias-queta.html" aria-label="View Neemias Queta"><span class="project-title">Neemias Queta</span><img src="neemias-queta--thumbnail-800.jpg" alt="Neemias Queta" loading="eager" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="marcus-jones.html" aria-label="View Marcus Jones"><span class="project-title">Marcus Jones</span><img src="marcus-jones--thumbnail-800.jpg" alt="Marcus Jones" loading="lazy" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="miami-heat-vs-celtics.html" aria-label="View Miami Heat vs. Celtics"><span class="project-title">Miami Heat vs. Celtics</span><img src="miami-heat-vs-celtics--thumbnail-800.jpg" alt="Miami Heat vs. Celtics" loading="lazy" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="draftkings.html" aria-label="View DraftKings"><span class="project-title">DraftKings</span><img src="draftkings--thumbnail-800.jpg" alt="DraftKings" loading="lazy" decoding="async" width="1200" height="1500"></a>
+<a class="project-tile" href="hockey.html" aria-label="View Hockey"><span class="project-title">Hockey</span><img src="hockey--thumbnail-800.jpg" alt="Hockey" loading="lazy" decoding="async" width="1200" height="1500"></a>
   </div>
 </section>
 
-<script src="script.js?v=33"></script>
+<script src="script.js?v=34"></script>
 <footer class="site-footer"><div class="brand-lockup"><span class="brand-mark-frame"><img class="personal-mark" src="personal-logo.png" alt="" width="1080" height="1080"></span><div class="brand-credit">© 2026 Jack Applegate · Stride Marketing LLC</div></div></footer>
 </body>
 </html>

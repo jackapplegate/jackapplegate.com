@@ -1,18 +1,30 @@
-// Tile visibility is independent of the counter and animation support.
+// Keep scroll reveal independent of counter animation and fail visibly.
 function initializeProjectTiles() {
+  const root = document.documentElement;
   const tiles = Array.from(document.querySelectorAll('.project-tile'));
+  if (!root.classList.contains('grid-reveal')) return;
   if (!tiles.length || !('IntersectionObserver' in window) ||
-      matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const index = tiles.indexOf(entry.target);
-      entry.target.style.animationDelay = `${(index % 4) * 90}ms`;
-      entry.target.classList.add('in-view');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-  tiles.forEach(tile => observer.observe(tile));
+      matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    root.classList.remove('grid-reveal');
+    return;
+  }
+  let observer;
+  try {
+    observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const index = tiles.indexOf(entry.target);
+        entry.target.style.transitionDelay = `${(index % 4) * 90}ms`;
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    tiles.forEach(tile => observer.observe(tile));
+    root.classList.add('grid-reveal-ready');
+  } catch (_) {
+    observer?.disconnect();
+    root.classList.remove('grid-reveal', 'grid-reveal-ready');
+  }
 }
 document.addEventListener('DOMContentLoaded', initializeProjectTiles);
 
