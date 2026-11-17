@@ -1,3 +1,21 @@
+// Tile visibility is independent of the counter and animation support.
+function initializeProjectTiles() {
+  const tiles = Array.from(document.querySelectorAll('.project-tile'));
+  if (!tiles.length || !('IntersectionObserver' in window) ||
+      matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const index = tiles.indexOf(entry.target);
+      entry.target.style.animationDelay = `${(index % 4) * 90}ms`;
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  tiles.forEach(tile => observer.observe(tile));
+}
+document.addEventListener('DOMContentLoaded', initializeProjectTiles);
+
 function buildOdometer(el, digitCount) {
   el.innerHTML = '';
   const slots = [];
@@ -120,21 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     current = Math.max(current, readSaved()); display();
   });
 
-  const tiles = document.querySelectorAll('.project-tile');
-  if (tiles.length) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Array.from(tiles).indexOf(entry.target);
-          entry.target.style.transitionDelay = `${(index % 4) * 90}ms`;
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
-    tiles.forEach((tile) => observer.observe(tile));
-  }
 });
 
 // Only the selected project video should play audio.

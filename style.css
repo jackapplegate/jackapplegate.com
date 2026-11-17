@@ -299,15 +299,18 @@ nav {
   background: linear-gradient(135deg, #2a2a2a, #161616);
   border: 1px solid #2a2a2a;
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.9s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Content stays visible when JavaScript is delayed or unavailable. */
+  opacity: 1;
+  transform: none;
 }
 
+/* Animate only after the observer is ready; never permanently hide content. */
 .project-tile.in-view {
-  opacity: 1;
-  transform: translateY(0);
+  animation: project-tile-reveal 1.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes project-tile-reveal {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .project-tile img {
@@ -430,7 +433,7 @@ nav { --entrance-distance: 18px; --entrance-delay: 0.04s; }
 @media (prefers-reduced-motion: reduce) {
   nav, .hero-video, .logo-marquee-label, .logo-marquee-wrap,
   .page-header h1, .page-header p, .about-content { animation: none; }
-  .project-tile { opacity: 1; transform: none; transition: none; }
+  .project-tile, .project-tile.in-view { opacity: 1; transform: none; transition: none; animation: none; }
   .logo-track, .pulse-ring { animation: none; }
   .digit-strip { transition: none !important; }
 }
